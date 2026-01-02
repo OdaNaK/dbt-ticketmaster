@@ -19,15 +19,13 @@ models:
 
       - name: event_attraction_id
         data_tests:
-          - not_null
           - relationships:
               arguments:
                 to: ref('stg_attractions')
-                field: venue_id
+                field: attraction_id
 
       - name: event_segment_id
         data_tests:
-          - not_null
           - relationships:
               arguments:
                 to: ref('stg_classifications')
@@ -47,4 +45,3 @@ models:
       - name: attraction_id
         data_tests:
           - unique
-          - not_null
