@@ -1,5 +1,5 @@
 sources:
-  - name: ticketmaster_data  
+  - name: ticketmaster_data
     database: ticketmaster-482803
     schema: ticketmaster_data
 

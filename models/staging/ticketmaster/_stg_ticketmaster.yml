@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: stg_events
+    description: "Les événements"
+    columns:
+      - name: event_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: event_venue_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_venues')
+                field: venue_id
+
+      - name: event_attraction_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_attractions')
+                field: venue_id
+
+      - name: event_segment_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_classifications')
+                field: segment_id
+
+  - name: stg_venues
+    description: "Référentiel des salles (Venues)."
+    columns:
+      - name: venue_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_attractions
+    description: "Référentiel des artistes et attractions."
+    columns:
+      - name: attraction_id
+        data_tests:
+          - unique
+          - not_null

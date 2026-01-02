@@ -11,8 +11,8 @@ renamed as (
     select
         name as event_name,
         id as event_id,
-        start_date_local as event_date,
-        start_time_local as event_starting_at,
+        PARSE_DATETIME('%Y-%m-%d %H:%M:%S', CONCAT(start_date_local, ' ', start_time_local)) AS event_date,
+        status_code as event_status,
         end_date_local,
         end_time_local,
         venue_id as event_venue_id,
@@ -20,6 +20,10 @@ renamed as (
         segment_id as event_segment_id,
         price_min as event_minimum_price,
         price_max as event_maximum_price,
+        type_name as event_type,
+        subtype_name as event_subtype,
+        latitude as event_latitude,
+        longitude as event_longitude
 
     from source
 
@@ -27,4 +31,3 @@ renamed as (
 
 select *
 from renamed
-
