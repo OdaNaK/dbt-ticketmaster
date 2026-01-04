@@ -8,9 +8,15 @@ source as (
 
 renamed as (
 
-    select *
+    select 
+    segment_id,
+    segment_name,
 
     from source
+
+    where segment_id is not null
+
+    group by all
 
 )
 

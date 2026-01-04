@@ -16,7 +16,7 @@ attractions as (
 
 classifications as (
     select *
-    from {{ ref('stg_classifications') }}
+    from {{ ref('stg_classifications')}}
 ),
 
 final as (
@@ -24,6 +24,8 @@ final as (
         e.event_id,
         e.event_name,
         e.event_date,
+        e.event_longitude,
+        e.event_latitude,
         v.venue_id,
         v.venue_name,
         v.venue_city,
@@ -31,7 +33,6 @@ final as (
         v.venue_country_code,
         v.venue_state_code,
         c.segment_name,
-        c.genre_name,
         a.attraction_id,
         a.attraction_name,
         a.attraction_total_upcoming_events,
@@ -41,7 +42,15 @@ final as (
         
         -- 2. DÉRIVÉS TEMPORELS
         extract(hour from e.event_date) as event_hour,
-        extract(dayofweek from e.event_date) as event_day_of_week,
+        case
+            when extract(dayofweek from e.event_date) = 1 then 7
+            else extract(dayofweek from e.event_date) - 1
+        end as event_day_of_week,
+        
+        CONCAT(case
+            when extract(dayofweek from e.event_date) = 1 then 7
+            else extract(dayofweek from e.event_date) - 1
+        end,'.',format_date('%A', e.event_date)) as event_day_of_week_sorted,
 
         -- 3. DENSITÉ (Combien d'événements dans cette ville)
         count(distinct e.event_id) over (partition by v.venue_city) as city_event_density,
@@ -58,6 +67,8 @@ final as (
     left join venues v on e.event_venue_id = v.venue_id
     left join classifications c on e.event_segment_id = c.segment_id
     left join attractions a on e.event_attraction_id = a.attraction_id
+
+    where event_date is not null
 )
 
 select * from final

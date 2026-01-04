@@ -18,6 +18,7 @@ renamed as (
         venue_id as event_venue_id,
         attraction_id as event_attraction_id,
         segment_id as event_segment_id,
+        genre_id as event_genre_id,
         price_min as event_minimum_price,
         price_max as event_maximum_price,
         type_name as event_type,
