@@ -1,0 +1,10 @@
+sources:
+  - name: ticketmaster_data
+    database: ticketmaster-482803
+    schema: ticketmaster_data
+
+    tables:
+      - name: raw_events
+      - name: raw_venues
+      - name: raw_attractions
+      - name: raw_classifications
